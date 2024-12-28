@@ -9,14 +9,13 @@ class BaseClass(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class TodoBase(BaseClass):
-    task: str
-    status: Literal["pending", "done"]
+class SensorData(BaseModel):
+    temperature: float
+    humidity: float
+    soil_moisture: float
+    light: float
 
 
-class TodoCreate(TodoBase):
-    pass
+class UserQuery(BaseModel):
+    query: str
 
-
-class Todo(TodoBase):
-    id: int
