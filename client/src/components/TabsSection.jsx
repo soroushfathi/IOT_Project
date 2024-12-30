@@ -1,68 +1,26 @@
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-
-// Register required components for chart.js
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-// Dummy data for charts
-const chartsData = [
-  {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [
-      {
-        label: 'Tab 1 Data',
-        data: [10, 20, 30, 40, 50],
-        borderColor: '#007bff',
-        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-      },
-    ],
-  },
-  {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [
-      {
-        label: 'Tab 2 Data',
-        data: [5, 15, 25, 35, 45],
-        borderColor: '#28a745',
-        backgroundColor: 'rgba(40, 167, 69, 0.2)',
-      },
-    ],
-  },
-  {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [
-      {
-        label: 'Tab 3 Data',
-        data: [15, 25, 20, 30, 40],
-        borderColor: '#ffc107',
-        backgroundColor: 'rgba(255, 193, 7, 0.2)',
-      },
-    ],
-  },
-  {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    datasets: [
-      {
-        label: 'Tab 4 Data',
-        data: [25, 35, 45, 55, 65],
-        borderColor: '#dc3545',
-        backgroundColor: 'rgba(220, 53, 69, 0.2)',
-      },
-    ],
-  },
-];
+import mockData from './mockData';
 
 const TabsSection = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const [currentValue, setCurrentValue] = useState(mockData.tabs[0].sensor.current); // Initialize from mock data
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+    setCurrentValue(mockData.tabs[index].sensor.current); // Update current value when tab changes
+  };
+
+  const activeTabData = mockData.tabs[activeTab];
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {/* Tabs */}
       <div style={{ display: 'flex', borderBottom: '1px solid #ccc' }}>
-        {['Tab 1', 'Tab 2', 'Tab 3', 'Tab 4'].map((tab, index) => (
+        {mockData.tabs.map((tab, index) => (
           <div
             key={index}
-            onClick={() => setActiveTab(index)}
+            onClick={() => handleTabChange(index)}
             style={{
               flex: 1,
               padding: '10px',
@@ -72,12 +30,55 @@ const TabsSection = () => {
               borderBottom: activeTab === index ? '2px solid #007bff' : 'none',
             }}
           >
-            {tab}
+            {tab.name}
           </div>
         ))}
       </div>
-      <div style={{ flexGrow: 1, padding: '1rem' }}>
-        <Line data={chartsData[activeTab]} />
+
+      {/* Chart Section */}
+      <div style={{ flex: 4, padding: '1rem' }}>
+        <Line data={activeTabData.chart} />
+      </div>
+
+      {/* Below Chart Section */}
+      <div style={{ flex: 1, display: 'flex', padding: '1rem', borderTop: '1px solid #ccc' }}>
+        {/* Left Section */}
+        <div style={{ flex: 1, paddingRight: '1rem', borderRight: '1px solid #ccc' }}>
+          <h4>{activeTabData.sensor.name}</h4>
+          <p>{activeTabData.sensor.description}</p>
+        </div>
+
+        {/* Right Section */}
+        <div style={{ flex: 4, paddingLeft: '1rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <label htmlFor="timeframe" style={{ display: 'block', marginBottom: '0.5rem' }}>
+              Timeframe
+            </label>
+            <select id="timeframe" style={{ width: '100%', padding: '0.5rem' }}>
+              {mockData.timeframes.map((timeframe, index) => (
+                <option key={index} value={timeframe}>
+                  {timeframe}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem' }}>
+            <button
+              onClick={() => setCurrentValue((prev) => Math.max(0, prev - 1))}
+              style={{ padding: '0.5rem', fontSize: '1.5rem', cursor: 'pointer' }}
+            >
+              -
+            </button>
+            <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{currentValue}</div>
+            <button
+              onClick={() => setCurrentValue((prev) => prev + 1)}
+              style={{ padding: '0.5rem', fontSize: '1.5rem', cursor: 'pointer' }}
+            >
+              +
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
