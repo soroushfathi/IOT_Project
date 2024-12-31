@@ -3,7 +3,9 @@ from sqlalchemy.orm import Session
 
 from app.api import deps
 from app.db import crud, schemas
-
+from app import exceptions
+from app.utils.logger import logger
+from app.config.llm import llm, prompt
 
 router = APIRouter()
 
@@ -23,10 +25,11 @@ async def analyze_data(sensor_data: schemas.SensorData):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.post("/query/")
+@router.post("/notify")
 async def query_llm(user_query: schemas.UserQuery):
     try:
         response = llm(user_query.query)
         return {"response": response}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.exception(e)
+        raise exceptions.InternalServerError()

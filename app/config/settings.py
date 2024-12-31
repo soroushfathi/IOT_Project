@@ -6,7 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_name: str = "Magical Service"
     api_prefix: str = ""
-    sentry_dsn_key: str
+    sentry_dsn_key: str | None = None
     database_type: str = "postgresql"
     database_password: str
     database_db: str
@@ -19,6 +19,9 @@ class Settings(BaseSettings):
         "{levelprefix} {asctime} - {light_yellow}{name}{reset} : {message}"
     )
     app_env: Literal["test", "prod", "develop"] = "develop"
+    openai_api_key: str
+    openai_model_name: str
+    openai_model_temprature: str
 
     model_config = SettingsConfigDict(
         env_file=".env", case_sensitive=False, extra="allow"

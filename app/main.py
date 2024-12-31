@@ -12,7 +12,7 @@ from app.config.settings import settings
 from app.exceptions import BaseHTTPError
 from app.utils.logger import get_logger
 
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate
 import json
 
@@ -41,7 +41,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[State]:
 
 app = FastAPI(title=settings.app_name, lifespan=lifespan)
 
-app.include_router(chat.router, prefix=settings.api_prefix, tags=["todo"])
+app.include_router(chat.router, prefix=settings.api_prefix + '/chat', tags=["chat"])
 
 
 # base http exception handler
