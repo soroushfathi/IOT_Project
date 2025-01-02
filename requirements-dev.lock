@@ -21,6 +21,7 @@ annotated-types==0.7.0
     # via pydantic
 anyio==4.4.0
     # via httpx
+    # via openai
     # via starlette
     # via watchfiles
 attrs==24.3.0
@@ -37,17 +38,14 @@ charset-normalizer==3.4.1
 click==8.1.7
     # via typer
     # via uvicorn
-colorama==0.4.6
-    # via click
-    # via colorlog
-    # via pytest
-    # via uvicorn
 colorlog==6.8.2
 coverage==7.6.1
 dataclasses-json==0.6.7
     # via langchain-community
 distlib==0.3.8
     # via virtualenv
+distro==1.9.0
+    # via openai
 dnspython==2.6.1
     # via email-validator
 email-validator==2.2.0
@@ -73,6 +71,7 @@ httptools==0.6.1
 httpx==0.27.0
     # via fastapi
     # via langsmith
+    # via openai
 httpx-sse==0.4.0
     # via langchain-community
 identify==2.6.0
@@ -87,6 +86,8 @@ iniconfig==2.0.0
     # via pytest
 jinja2==3.1.4
     # via fastapi
+jiter==0.8.2
+    # via openai
 jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
@@ -125,6 +126,7 @@ nodeenv==1.9.1
 numpy==1.26.4
     # via langchain
     # via langchain-community
+openai==1.58.1
 orjson==3.10.13
     # via langsmith
 packaging==24.1
@@ -145,6 +147,7 @@ pydantic==2.8.2
     # via langchain
     # via langchain-core
     # via langsmith
+    # via openai
     # via pydantic-settings
 pydantic-core==2.20.1
     # via pydantic
@@ -181,6 +184,9 @@ shellingham==1.5.4
 sniffio==1.3.1
     # via anyio
     # via httpx
+    # via openai
+socksio==1.0.0
+    # via httpx
 sqlalchemy==2.0.31
     # via alembic
     # via langchain
@@ -191,12 +197,15 @@ tenacity==9.0.0
     # via langchain
     # via langchain-community
     # via langchain-core
+tqdm==4.67.1
+    # via openai
 typer==0.12.3
     # via fastapi-cli
 typing-extensions==4.12.2
     # via alembic
     # via fastapi
     # via langchain-core
+    # via openai
     # via pydantic
     # via pydantic-core
     # via sqlalchemy
@@ -210,6 +219,8 @@ urllib3==2.2.2
 uvicorn==0.30.5
     # via fastapi
     # via fastapi-cli
+uvloop==0.21.0
+    # via uvicorn
 virtualenv==20.26.3
     # via pre-commit
 watchfiles==0.22.0
