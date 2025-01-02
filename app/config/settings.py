@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     app_env: Literal["test", "prod", "develop"] = "develop"
     openai_api_key: str
     openai_model_name: str
-    openai_model_temprature: str
+    openai_model_temperature: str
 
     model_config = SettingsConfigDict(
         env_file=".env", case_sensitive=False, extra="allow"
