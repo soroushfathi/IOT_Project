@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     api_prefix: str = ""
     sentry_dsn_key: str | None = None
     database_type: str = "postgresql"
+    database_location: str
     database_password: str
     database_db: str
     database_user: str | None = "postgres"
