@@ -12,9 +12,6 @@ from app.config.settings import settings
 from app.exceptions import BaseHTTPError
 from app.utils.logger import get_logger
 
-from langchain_community.llms import OpenAI
-from langchain.prompts import PromptTemplate
-import json
 
 # initilize sentry on production
 if settings.app_env != "develop":
