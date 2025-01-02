@@ -22,13 +22,19 @@ async def analyze_data(sensor_data: schemas.SensorData):
         response = llm(formatted_prompt)
         return {"insights": response}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise exceptions.InternalServerError()
 
 
 @router.post("/notify")
 async def query_llm(user_query: schemas.UserQuery):
     try:
-        response = llm(user_query.query)
+        formatted_prompt = prompt.format(
+            temperature=18,
+            humidity=60,
+            soil_moisture=3.0,
+            light=5.0
+        )
+        response = llm(formatted_prompt)
         return {"response": response}
     except Exception as e:
         logger.exception(e)
