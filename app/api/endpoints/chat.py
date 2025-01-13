@@ -26,7 +26,10 @@ async def analyze_data(sensor_data: schemas.SensorData):
 
 
 @router.post("/notify")
-async def query_llm(user_query: schemas.UserQuery):
+async def query_llm(
+    user_query: schemas.UserQuery,
+    db: Session = Depends(deps.get_db)
+):
     try:
         formatted_prompt = prompt.format(
             temperature=18,
