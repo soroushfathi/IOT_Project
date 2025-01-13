@@ -15,7 +15,7 @@ class Sensor(Base):
     max_value: Mapped[int]
     created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
     
-    messages: Mapped['Message'] = relationship('Message', back_populates='sensor')
+    messages: Mapped["Message"] = relationship('Message', back_populates='sensor')
 
 
 class Message(Base):
@@ -28,4 +28,4 @@ class Message(Base):
     created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
     sensor_id: Mapped[int] = mapped_column(sa.ForeignKey('sensor.id'))
     
-    sensor: Mapped[Sensor] = relationship('Sensor', back_populates='messages')
+    sensor: Mapped["Sensor"] = relationship('Sensor', back_populates='messages')
