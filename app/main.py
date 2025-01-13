@@ -7,7 +7,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from app.api.endpoints import chat
+from app.api.endpoints import chat, sensors
 from app.config.settings import settings
 from app.exceptions import BaseHTTPError
 from app.utils.logger import get_logger
@@ -39,6 +39,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[State]:
 app = FastAPI(title=settings.app_name, lifespan=lifespan)
 
 app.include_router(chat.router, prefix=settings.api_prefix + '/chat', tags=["chat"])
+app.include_router(sensors.router, prefix=settings.api_prefix, tags=["sensor"])
 
 
 # base http exception handler
