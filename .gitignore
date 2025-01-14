@@ -9,3 +9,6 @@ venv/
 .vscode
 *.zip
 packages/
+
+.codegpt
+*.sqlite
