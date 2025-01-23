@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import chat, sensors
 from app.config.settings import settings
 from app.exceptions import BaseHTTPError
@@ -37,6 +38,12 @@ async def lifespan(_: FastAPI) -> AsyncIterator[State]:
 
 
 app = FastAPI(title=settings.app_name, lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(chat.router, prefix=settings.api_prefix + '/chat', tags=["chat"])
 app.include_router(sensors.router, prefix=settings.api_prefix, tags=["sensor"])
