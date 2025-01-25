@@ -8,7 +8,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.endpoints import chat, sensors, raspberry
+from app.api.endpoints import chat, sensors, controller
 from app.config.settings import settings
 from app.exceptions import BaseHTTPError
 from app.utils.logger import get_logger
@@ -47,7 +47,7 @@ app.add_middleware(
 
 app.include_router(chat.router, prefix=settings.api_prefix + '/chat', tags=["chat"])
 app.include_router(sensors.router, prefix=settings.api_prefix, tags=["sensor"])
-app.include_router(raspberry.router, prefix=settings.api_prefix + '/raspberry', tags=["raspberry"])
+app.include_router(controller.router, prefix=settings.api_prefix + '/controller', tags=["controller"])
 
 
 # base http exception handler
