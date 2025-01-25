@@ -13,8 +13,6 @@ class BaseClass(BaseModel):
 class CreateSensorSchema(BaseModel):
     name: str
     description: str | None
-    min_value: int
-    max_value: int
 
 
 class SensorData(BaseModel):
@@ -33,8 +31,6 @@ class SensorSchema(BaseModel):
     id: int
     name: str
     description: str
-    min_value: int
-    max_value: int
     created_at: datetime
 
     class Config:
@@ -77,3 +73,11 @@ class CreateControllerSchema(BaseModel):
     description: str | None
     min_value: int
     max_value: int
+
+
+class UpdateControllerSchema(BaseModel):
+    name: str | None
+    description: str | None
+    min_value: int | None
+    max_value: int | None
+

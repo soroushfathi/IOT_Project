@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
 from app.db.models import Controller
-from app.db.schemas import ControllerSchema, CreateControllerSchema
+from app.db.schemas import ControllerSchema, CreateControllerSchema, UpdateControllerSchema
 from app.utils.logger import logger
 
 router = APIRouter()
@@ -66,3 +66,23 @@ def get_controller(controller_id: int, db: Session = Depends(get_db)):
     if not controller:
         raise HTTPException(status_code=404, detail="Controller not found")
     return controller
+
+
+@router.put("/{controller_id}", response_model=ControllerSchema)
+def update_controller(controller_id: int, controller: UpdateControllerSchema, db: Session = Depends(get_db)):
+    existing_controller = db.query(Controller).filter(Controller.id == controller_id).first()
+    if not existing_controller:
+        raise HTTPException(status_code=404, detail="Controller not found")
+
+    if controller.name is not None:
+        existing_controller.name = controller.name
+    if controller.description is not None:
+        existing_controller.description = controller.description
+    if controller.min_value is not None:
+        existing_controller.min_value = controller.min_value
+    if controller.max_value is not None:
+        existing_controller.max_value = controller.max_value
+
+    db.commit()
+    db.refresh(existing_controller)
+    return existing_controller

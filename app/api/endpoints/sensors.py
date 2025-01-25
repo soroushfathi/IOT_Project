@@ -21,8 +21,6 @@ def create_sensor(sensor: schemas.CreateSensorSchema, db: Session = Depends(get_
     new_sensor = models.Sensor(
         name=sensor.name,
         description=sensor.description,
-        min_value=sensor.min_value,
-        max_value=sensor.max_value
     )
     db.add(new_sensor)
     db.commit()
