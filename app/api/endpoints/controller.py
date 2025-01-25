@@ -5,7 +5,7 @@ router = APIRouter()
 raspberry_pi_connection = None
 
 
-@router.post("/send-command")
+@router.put("/send-command")
 async def send_command(command: dict):
     global raspberry_pi_connection
     if not raspberry_pi_connection:
@@ -28,6 +28,7 @@ async def websocket_raspberry_pi(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_text()
+            logger.info(f"Message text was: {data}")
             await websocket.send_text(f"Message text was: {data}")
     except WebSocketDisconnect:
         logger.info("WS has been disconneted")
