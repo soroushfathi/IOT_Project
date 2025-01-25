@@ -1,4 +1,9 @@
-from fastapi import WebSocket, APIRouter, WebSocketDisconnect, HTTPException
+from fastapi import WebSocket, APIRouter, WebSocketDisconnect, HTTPException, Depends
+from sqlalchemy.orm import Session
+
+from app.api.deps import get_db
+from app.db.models import Controller
+from app.db.schemas import ControllerSchema, CreateControllerSchema
 from app.utils.logger import logger
 
 router = APIRouter()
@@ -33,3 +38,31 @@ async def websocket_raspberry_pi(websocket: WebSocket):
     except WebSocketDisconnect:
         logger.info("WS has been disconneted")
         raspberry_pi_connection = None
+
+
+@router.get("/list", response_model=list[ControllerSchema])
+def get_all_controllers(db: Session = Depends(get_db)):
+    controllers = db.query(Controller).all()
+    return controllers
+
+
+@router.post("/create", response_model=ControllerSchema)
+def create_controller(controller: CreateControllerSchema, db: Session = Depends(get_db)):
+    new_controller = Controller(
+        name=controller.name,
+        description=controller.description,
+        min_value=controller.min_value,
+        max_value=controller.max_value
+    )
+    db.add(new_controller)
+    db.commit()
+    db.refresh(new_controller)
+    return new_controller
+
+
+@router.get("/{controller_id}", response_model=ControllerSchema)
+def get_controller(controller_id: int, db: Session = Depends(get_db)):
+    controller = db.query(Controller).filter(Controller.id == controller_id).first()
+    if not controller:
+        raise HTTPException(status_code=404, detail="Controller not found")
+    return controller

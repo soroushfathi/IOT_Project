@@ -59,3 +59,21 @@ class CreateMessageSchema(BaseModel):
     timestamp: datetime | None
     sensor_id: int
 
+
+class ControllerSchema(BaseModel):
+    id: int
+    name: str
+    description: str
+    min_value: int
+    max_value: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class CreateControllerSchema(BaseModel):
+    name: str
+    description: str | None
+    min_value: int
+    max_value: int
