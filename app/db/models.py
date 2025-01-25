@@ -11,8 +11,7 @@ class Sensor(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     description: Mapped[str]
-    min_value: Mapped[int]
-    max_value: Mapped[int]
+    value: Mapped[int] = mapped_column(nullable=True)
     created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
     
     messages: Mapped["Message"] = relationship('Message', back_populates='sensor')
@@ -29,3 +28,14 @@ class Message(Base):
     sensor_id: Mapped[int] = mapped_column(sa.ForeignKey('sensor.id'))
     
     sensor: Mapped["Sensor"] = relationship('Sensor', back_populates='messages')
+
+
+class Controller(Base):
+    __tablename__ = 'controller'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    
+    name: Mapped[str]
+    description: Mapped[str]
+    min_value: Mapped[int]
+    max_value: Mapped[int]
+    created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
