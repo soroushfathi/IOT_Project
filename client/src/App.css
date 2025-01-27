@@ -1,0 +1,19 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.tabs-section {
+  width: 70%; /* Now 70% of the screen */
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.chat-section {
+  width: 30%; /* Now 30% of the screen */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 1rem;
+}
