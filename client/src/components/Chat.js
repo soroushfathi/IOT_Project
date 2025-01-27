@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
+import { fetchChatResponse } from '../helpers/fetchHelper';
+import ReactMarkdown from 'react-markdown';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
+
       setMessages([...messages, { text: input, sender: 'user' }]);
       setInput('');
-      // Simulate AI response
-      setTimeout(() => {
+      setIsLoading(true);
+
+      try {
+
+        const aiResponse = await fetchChatResponse(input);
         setMessages((prev) => [
           ...prev,
-          { text: 'This is an AI response!', sender: 'ai' },
+          { text: aiResponse, sender: 'ai' },
         ]);
-      }, 1000);
+      } catch (error) {
+        setMessages((prev) => [
+          ...prev,
+          { text: 'Error: Unable to fetch response.', sender: 'ai' },
+        ]);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -47,10 +61,27 @@ const Chat = () => {
                 wordWrap: 'break-word',
               }}
             >
-              {msg.text}
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
             </span>
           </div>
         ))}
+        {isLoading && (
+          <div style={{ textAlign: 'left', margin: '0.5rem 0' }}>
+            <span
+              style={{
+                display: 'inline-block',
+                padding: '10px',
+                backgroundColor: '#f4f4f4',
+                color: '#000',
+                borderRadius: '10px',
+                maxWidth: '70%',
+                wordWrap: 'break-word',
+              }}
+            >
+              Typing...
+            </span>
+          </div>
+        )}
       </div>
       <div style={{ display: 'flex', padding: '10px' }}>
         <input
@@ -64,6 +95,7 @@ const Chat = () => {
             border: '1px solid #ccc',
             borderRadius: '5px',
           }}
+          placeholder="Type your message..."
         />
         <button
           onClick={handleSend}
@@ -75,8 +107,9 @@ const Chat = () => {
             borderRadius: '5px',
             cursor: 'pointer',
           }}
+          disabled={isLoading}
         >
-          Send
+          {isLoading ? 'Sending...' : 'Send'}
         </button>
       </div>
     </div>
