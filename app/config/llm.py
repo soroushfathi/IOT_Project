@@ -15,12 +15,11 @@ llm = OpenAI(
 
 template = """
 You are a greenhouse manager assistant. Based on the given sensor readings:
-Temperature: {temperature}°C
-Humidity: {humidity}%
-Soil Moisture: {soil_moisture}%
-Light Intensity: {light} lux
+{data}
 
+Answer the manager query:
+{query}
 Provide actionable insights to maintain optimal plant growth. Consider user queries if provided. Answer just in Persian.
 """
 
-prompt = PromptTemplate(input_variables=["temperature", "humidity", "soil_moisture", "light"], template=template)
+prompt = PromptTemplate(input_variables=["data", "query"], template=template)
