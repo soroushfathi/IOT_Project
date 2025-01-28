@@ -10,32 +10,18 @@ from app.config.llm import llm, prompt
 router = APIRouter()
 
 
-@router.post("/analyze/")
-async def analyze_data(sensor_data: schemas.SensorData):
-    try:
-        formatted_prompt = prompt.format(
-            temperature=sensor_data.temperature,
-            humidity=sensor_data.humidity,
-            soil_moisture=sensor_data.soil_moisture,
-            light=sensor_data.light
-        )
-        response = llm(formatted_prompt)
-        return {"insights": response}
-    except Exception as e:
-        raise exceptions.InternalServerError()
-
-
 @router.post("/notify")
 async def query_llm(
     user_query: schemas.UserQuery,
     db: Session = Depends(deps.get_db)
 ):
+    sensors = crud.get_sensors_data(db)
+    data = [str(schemas.SensorData.model_validate(sensor).model_dump()) for sensor in sensors]
+    logger.info(f"sensors data: {data}")
     try:
         formatted_prompt = prompt.format(
-            temperature=18,
-            humidity=60,
-            soil_moisture=3.0,
-            light=5.0
+            data="\n".join(data),
+            query=user_query.query
         )
         response = llm(formatted_prompt)
         return {"response": response}
