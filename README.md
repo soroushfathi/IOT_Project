@@ -1,93 +1,89 @@
-# backend
+# **Smart Greenhouse Management System**
 
+## **Table of Contents**
+1. [Abstract](#abstract)  
+2. [Phase 1: Sensors and Connections](#phase-1-sensors-and-connections)  
+3. [Phase 2: Edge Server](#phase-2-edge-server)  
+4. [Phase 3: Backend & Retrieval-Augmented Generation (RAG)](#phase-3-backend--rag)  
+5. [Phase 4: Client](#phase-4-client)  
 
+---
 
-## Getting started
+## **Abstract**  
+The **Smart Greenhouse Management System** is an IoT-based solution designed to optimize and automate greenhouse operations. It incorporates sensors to monitor environmental factors such as temperature, light, CO2 levels, and water, alongside controllers for managing these variables. The project is divided into four phases:
+1. Establishing hardware connections for sensors and controllers.
+2. Creating an edge server for real-time data collection and initial processing.
+3. Developing a backend system with a Retrieval-Augmented Generation (RAG) module for intelligent decision-making and question answering.
+4. Building a user-friendly client application for monitoring and control.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+---
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## **Phase 1: Sensors and Connections**  
+This phase focuses on hardware integration and data acquisition:  
+- **Sensors:** Collect real-time data on temperature, soil moisture, light intensity, CO2 levels, pH, and water levels.  
+- **Controllers:** Manage systems like irrigation, lighting, and ventilation.  
+- **Microcontroller:** Acts as a central hub, communicating with sensors and controllers.  
+- **Socket Connection:** Sends data to the server for further processing.  
 
-## Add your files
+---
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## **Phase 2: Edge Server**  
+The edge server bridges the gap between hardware and the backend system:  
+- **Data Processing:** Pre-processes sensor data locally to reduce network bandwidth usage.  
+- **Alerts:** Generates preliminary alerts for critical conditions.  
+- **Communication:** Sends processed data to the central backend server.  
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/utravs1/faq/backend.git
-git branch -M main
-git push -uf origin main
-```
+---
 
-## Integrate with your tools
+## **Phase 3: Backend & Retrieval-Augmented Generation (RAG)**  
+The backend is the heart of the system, ensuring seamless integration and intelligent operations:  
+- **Data Management:** Stores and processes data from the edge server using a robust database.  
+- **RAG Module:** Leverages farming documentation to answer farmers' questions and recommend actions.  
+- **Automation:** Issues commands to controllers (e.g., adjust temperature or irrigation schedules).  
+- **API Services:** Provides endpoints for client applications to interact with the system.  
 
-- [ ] [Set up project integrations](https://gitlab.com/utravs1/faq/backend/-/settings/integrations)
+---
 
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## **Phase 4: Client**  
+The client application ensures user accessibility and control:  
+- **Set-up & Installation:**
+  - use `npm` `install` command in client directory to install needed packages.
+  - use `npm` `start` to launch the client.
+  - freely use the client.
+- **Dashboard Layout:**
+  1. **Sensor Tabs:** consists of historical data of sensor, its name and description.
+  2. **Controller Tabs:** includes each controllers name and description, also the controller value can be manipulated with buttons in its range.
+  3. **Chat Section:**  uses historical data and given prompt to analysis the current state of greenhouse.
+- **File Structure:** 
+  - directory structure:
+    ```
+    client/                 
+    ├── node_modules/      
+    ├── public/          
+    ├── src/
+    │   ├── components/
+    |   ├── Chat.js
+    |   ├── ControllerTab.js
+    |   ├── SensorTab.js
+    |   ├── Tabs.js
+    |   ├── helpers/
+    |       ├── fetchHelper.js
+    │   ├── App.js         
+    │   ├── index.js       
+    │   ├── ...
+    |   ├── ...
+    ├── ...
+    ├── package-lock.json
+    ├── package.json
+    ``` 
+  - **App.js:** main entry of where other components will be included in.
+  - **Chat.js:** responsible for chat section on right side, it uses fetch requests of `fetchHelper.js`.
+  - **ControllerTab.js:** includes all Controllers available in bottom left section, it shows name description and enables controls for that controller.
+  - **SensorTab.js:** includes all available Sensors on upper left section, it shows historical data of sensors.
+  - **Tabs.js:** includes SensorTab.js and ControllerTab.js as one whole section which is located in left of chat section.
+  - **fetchHelper.js:** includes all fetch requests needed for app:
+    1. `get` Sensors & Controllers data
+    2. `get` Sensor data
+    3. `get` Controller data
+    4. `update` Controller data
+    5. `post` Sends Chat data 
