@@ -51,6 +51,7 @@ def create_controller(controller: CreateControllerSchema, db: Session = Depends(
     new_controller = Controller(
         name=controller.name,
         description=controller.description,
+        value=controller.value,
         min_value=controller.min_value,
         max_value=controller.max_value
     )
@@ -69,7 +70,7 @@ def get_controller(controller_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{controller_id}", response_model=ControllerSchema)
-def update_controller(controller_id: int, controller: UpdateControllerSchema, db: Session = Depends(get_db)):
+async def update_controller(controller_id: int, controller: UpdateControllerSchema, db: Session = Depends(get_db)):
     existing_controller = db.query(Controller).filter(Controller.id == controller_id).first()
     if not existing_controller:
         raise HTTPException(status_code=404, detail="Controller not found")
@@ -78,6 +79,8 @@ def update_controller(controller_id: int, controller: UpdateControllerSchema, db
         existing_controller.name = controller.name
     if controller.description is not None:
         existing_controller.description = controller.description
+    if controller.value is not None:
+        existing_controller.value = controller.value
     if controller.min_value is not None:
         existing_controller.min_value = controller.min_value
     if controller.max_value is not None:
@@ -85,4 +88,13 @@ def update_controller(controller_id: int, controller: UpdateControllerSchema, db
 
     db.commit()
     db.refresh(existing_controller)
+
+    global raspberry_pi_connection
+    if not raspberry_pi_connection:
+        raise HTTPException(status_code=503, detail="Raspberry Pi is not connected")    
+    try:
+        await raspberry_pi_connection.send_text(str(controller))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send command: {str(e)}")
+
     return existing_controller
