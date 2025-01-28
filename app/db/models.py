@@ -21,8 +21,7 @@ class Message(Base):
     __tablename__ = 'message'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
-    message: Mapped[str]
+    value: Mapped[int] = mapped_column(nullable=True)
     timestamp: Mapped[timezone] = mapped_column(sa.TIMESTAMP, nullable=True)
     created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
     sensor_id: Mapped[int] = mapped_column(sa.ForeignKey('sensor.id'))
@@ -36,6 +35,7 @@ class Controller(Base):
     
     name: Mapped[str]
     description: Mapped[str]
+    value: Mapped[int] = mapped_column(nullable=True)
     min_value: Mapped[int]
     max_value: Mapped[int]
     created_at: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
