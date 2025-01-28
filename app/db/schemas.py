@@ -39,8 +39,7 @@ class SensorSchema(BaseModel):
 
 class MessageSchema(BaseModel):
     id: int
-    name: str
-    message: str
+    value: int | None
     timestamp: datetime | None
     created_at: datetime
     sensor_id: int
@@ -50,8 +49,7 @@ class MessageSchema(BaseModel):
 
 
 class CreateMessageSchema(BaseModel):
-    name: str
-    message: str
+    value: int | None
     timestamp: datetime | None
     sensor_id: int
 
@@ -60,6 +58,7 @@ class ControllerSchema(BaseModel):
     id: int
     name: str
     description: str
+    value: int | None
     min_value: int
     max_value: int
     created_at: datetime
@@ -71,6 +70,7 @@ class ControllerSchema(BaseModel):
 class CreateControllerSchema(BaseModel):
     name: str
     description: str | None
+    value: int | None
     min_value: int
     max_value: int
 
@@ -78,6 +78,7 @@ class CreateControllerSchema(BaseModel):
 class UpdateControllerSchema(BaseModel):
     name: str | None
     description: str | None
+    value: int | None
     min_value: int | None
     max_value: int | None
 
