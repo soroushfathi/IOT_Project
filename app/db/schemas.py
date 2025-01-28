@@ -15,18 +15,18 @@ class CreateSensorSchema(BaseModel):
     description: str | None
 
 
-class SensorData(BaseModel):
-    temperature: float
-    humidity: float
-    soil_moisture: float
-    light: float
-
-
 class UserQuery(BaseModel):
     query: str
 
 
-# Pydantic Schemas
+class SensorData(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
+    id: int
+    name: str 
+    value: int | None
+
+
 class SensorSchema(BaseModel):
     id: int
     name: str
